@@ -7,8 +7,21 @@ import { APP_DATA } from '@/helpers/data';
 import { MdFileDownload } from 'react-icons/md';
 import { AiFillFire } from 'react-icons/ai';
 
-const HeroLeft = () => {
+interface IProps {
+  scrollTo: () => void;
+}
+
+const HeroLeft = (props: IProps) => {
   const { t } = useTranslation();
+
+  const opnenInNewTab = (url: string): void => {
+    const win = window.open(url, '_blank', 'noopener,noreferrer');
+    if (win) win.opener = null;
+  };
+
+  const handlerDownloadCv = () => {
+    opnenInNewTab('https://drive.google.com');
+  };
 
   return (
     <div className='hero-left'>
@@ -46,6 +59,7 @@ const HeroLeft = () => {
       </div>
       <div className='d-md-flex d-none gap-4'>
         <ResizeButton
+          onClick={props.scrollTo}
           btnText={t('heroSection.exp')}
           btnIcons={<AiFillFire style={{ color: 'orange' }} />}
           btnStyle={{
@@ -55,6 +69,7 @@ const HeroLeft = () => {
           }}
         />
         <ResizeButton
+          onClick={handlerDownloadCv}
           btnText={t('heroSection.cv')}
           btnIcons={<MdFileDownload />}
         />
